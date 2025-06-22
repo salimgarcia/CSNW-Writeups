@@ -1,0 +1,69 @@
+Active Directory Plan:
+
+●	Create 2 Windows Server 2019 VMs to act as domain controllers
+●	Click Manage, Add Roles and Features
+●	Select ‘Role-Based or Feature-Based Installation’
+●	Select server to use as domain controller
+●	Install Active Directory Domain Services
+●	Install DNS Server role
+●	Promote server to domain controller
+●	Choose add new forest and make root domain name
+●	Create Directory Services Restore Mode password
+●	Complete installation and restart server
+
+
+Active Directory Documentation:
+
+●	Login to server as administrator
+●	Open Server Manager and click ‘Local Server’ on the left pane
+●	Click Ethernet section on the right pane
+●	Right Click Ethernet icon and open ‘Properties’
+●	Select ‘Internet Protocol Version 4’ and click ‘Properties’
+●	Set static IP address and click OK
+●	Return to Server Manager, click manage, and select ‘Add Roles and Features’
+●	Select ‘Role-Based or Feature-Based Installation’ and click next
+●	Select server and click next
+●	Select ‘Active Directory Domain Services’ and ‘DNS’ and click next
+●	Click next through Features, AD DS, and DNS server and click Install
+●	When installation is complete click ‘Promote this server to a domain controller’
+●	Select ‘Add a new forest’ and enter a root domain name and click next
+●	Enter a DSRM password and click next
+●	Click next on DNS options and change NetBIOS domain name if necessary, then click next
+●	Click next on ‘Paths’, ‘Review Options’, and then click Install
+●	After the server reboots, log back in as Administrator and open Server Manager
+●	Click ‘Tools’ and select ‘DNS’
+●	Right click on ‘Reverse Lookup Zones’ and select ‘New Zone’
+●	In the New Zone Wizard, click next, select ‘Primary Zone’, check ‘Store zone in Active Directory’, and click next
+●	Select ‘To all DNS server running on domain controllers in this domain’ and click next
+●	Select ‘IPv4 Reverse Lookup Zone’ and click next
+●	Enter the first three numbers of your IP address in Network ID and click next
+●	Select ‘Allow only secure dynamic updates’ and click next, then click finish
+●	In ‘Forward Lookup Zones’ open the folder with the same name as your root domain
+●	Open Properties of host record for your domain name (will have the same name as your server)
+●	Check ‘Update associated pointer (PTR) record’ and click ok
+●	Go back to ‘Reverse Lookup Zones’ and open the zone you recently created
+●	Right click in the right pane and click refresh, a new Pointer record will appear
+●	Close DNS Manager and click Local Server in the left pane
+●	Click the ethernet section in the right pane
+●	Right click the ethernet icon and open ‘Properties’
+●	Select ‘Internet Protocol Version 4’ and open ‘Properties’
+●	In preferred DNS server, enter the static IP of the server
+●	Verify that the DNS server is working properly by opening powershell and running nslookup
+●	Now create another VM to act as a second domain controller
+●	Login as administrator and open Server Manager
+●	Set a static IP and set DNS server to the first domain controller
+●	Go back to the Local Server pane and click on the Workgroup section
+●	Click the ‘Change” button and select ‘Domain’
+●	Enter the name of your domain and click OK
+●	Restart the server and open Server Manager
+●	Use nslookup to verify that the new domain controller is part of the domain
+●	In Server Manager, click ‘Manage’ and select ‘Add Roles and Features’
+●	In ‘Server Roles’ select ‘Active Directory Domain Services’
+●	Click next through the rest of the menus and then click install
+●	Click ‘Promote this server to a domain controller’
+●	Select ‘Add a domain controller to an existing domain’ and enter the domain name
+●	Click ‘Change’ under ‘Supply the credentials to perform this operation’ and enter the credentials for the Administrator account, then click next
+●	Set DSRM password and click next and next again
+●	Select the domain controller to replicate from and then click next
+●	Click next through the rest of the menus, then click install
+●	The server will restart
